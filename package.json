@@ -22,7 +22,6 @@
   "homepage": "https://github.com/Kureev/jsmigrate#readme",
   "dependencies": {
     "jscodeshift": "^0.3.7",
-    "jsondiffpatch": "^0.1.37",
-    "recast": "^0.10.33"
+    "jsondiffpatch": "^0.1.37"
   }
 }

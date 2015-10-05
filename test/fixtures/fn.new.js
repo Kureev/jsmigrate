@@ -4,8 +4,8 @@ function test() {
   connect(host, port);
 }
 
-function connect(options) {
-  doSomething(options.host, options.port);
+function connect(host, port) {
+  doSomething(host, port);
 }
 
 function test() {
@@ -14,5 +14,5 @@ function test() {
   connect({ host: host, port: port, });
 }
 
-var variable = function(a, b) {};
-var arrow = (a, b) => {};
+var variable = function(a, b, c) {};
+var arrow = (a) => a;

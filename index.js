@@ -1,21 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-const recast = require('recast');
+const jscodeshift = require('jscodeshift');
+const jsondiffpatch = require('jsondiffpatch');
+const helpers = require('./lib/helpers');
 
-const source = fs.readFileSync(path.join('test', 'fixtures', 'react.class.js'), 'utf8');
-const target = source.replace(/\d+/g, 'test');
+const src = fs.readFileSync(path.join('test', 'fixtures', 'fn.js'), 'utf8');
+const target = fs.readFileSync(path.join('test', 'fixtures', 'fn.new.js'), 'utf8');
 
-const sourceAST = recast.parse(source);
-const functions = [];
-
-recast.visit(sourceAST, {
-  visitFunction: function visitFunction(p) {
-    if (p.node.id) {
-      functions[p.node.id.name] = p.node.params;
-    }
-
-    return false;
-  },
+jscodeshift.registerMethods({
+  makeFunctionsTable: helpers.makeFunctionsTable,
 });
 
-console.log(functions);
+const sourceTable = jscodeshift(src).makeFunctionsTable();
+const targetTable = jscodeshift(target).makeFunctionsTable();
+
+console.log(jsondiffpatch.diff(sourceTable, targetTable));
